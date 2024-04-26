@@ -32,8 +32,10 @@ func greet() {
 	fmt.Println("1: Print existing data")
 	fmt.Println("2: Search by phone number")
 	fmt.Println("3: Add new member")
+	fmt.Println("4:Delete member by key")
 
 }
+
 func PrintVal() {
 	data, err := json.MarshalIndent(userDetails, "", "  ")
 	if err != nil {
@@ -43,8 +45,11 @@ func PrintVal() {
 	fmt.Println(printData)
 }
 func searchByPhone(PhoneNo string) {
-
-	fmt.Println(userDetails[PhoneNo])
+	if _, ok := userDetails[PhoneNo]; ok {
+		fmt.Println(userDetails[PhoneNo])
+	} else {
+		fmt.Println("User with the provided phone number does not exist.")
+	}
 
 }
 
@@ -58,12 +63,16 @@ func addMember(firstName, email, phoneNo string) {
 	userDetails[phoneNo] = append(userDetails[phoneNo], newUser)
 
 }
+func deleteMember(phoneNo string) {
+	if _, ok := userDetails[phoneNo]; ok {
+		delete(userDetails, phoneNo)
 
-func main() {
+	} else {
+		fmt.Println("User with the provided phone number does not exist.")
+	}
 
-	greet()
-	fmt.Println("Enter Here!")
-	fmt.Scan(&choice)
+}
+func userInputsConditions(choice int) {
 	switch choice {
 	case 1:
 		PrintVal()
@@ -89,8 +98,16 @@ func main() {
 		var phoneNo string
 		fmt.Println("Enter User key which is user phone number :")
 		fmt.Scan(&phoneNo)
-		
+		deleteMember(phoneNo)
 	default:
 		fmt.Println("Invalid choice")
 	}
+}
+func main() {
+
+	greet()
+	fmt.Println("Enter Here!")
+	fmt.Scan(&choice)
+	userInputsConditions(choice)
+
 }
