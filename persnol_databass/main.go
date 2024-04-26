@@ -47,9 +47,18 @@ func searchByPhone(PhoneNo string) {
 	fmt.Println(userDetails[PhoneNo])
 
 }
-func addMember() {
+
+func addMember(firstName, email, phoneNo string) {
+	newUser := User{
+		Name:    firstName,
+		Email:   email,
+		PhoneNo: phoneNo,
+		// Address: Address{}, // Initialize Address with empty values
+	}
+	userDetails[phoneNo] = append(userDetails[phoneNo], newUser)
 
 }
+
 func main() {
 
 	greet()
@@ -74,6 +83,13 @@ func main() {
 		fmt.Scan(&email)
 		fmt.Println("Enter Your Phone number:")
 		fmt.Scan(&phoneNo)
+		addMember(firstName, email, phoneNo)
+		PrintVal()
+	case 4:
+		var phoneNo string
+		fmt.Println("Enter User key which is user phone number :")
+		fmt.Scan(&phoneNo)
+		
 	default:
 		fmt.Println("Invalid choice")
 	}
